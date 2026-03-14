@@ -61,6 +61,19 @@
             color: #a0826d;
             margin-bottom: 40px;
         }
+
+        .hero-hint {
+            font-size: 1.1rem !important;
+            color: #8b6347 !important;
+            font-style: italic;
+            background: rgba(255,255,255,0.6);
+            border-left: 4px solid #d4a574;
+            border-radius: 8px;
+            padding: 14px 20px !important;
+            margin: -20px auto 0 auto !important;
+            max-width: 600px;
+            line-height: 1.6;
+        }
         
         .countdown-box {
             background: rgba(255, 255, 255, 0.7);
@@ -366,24 +379,56 @@
         }
         
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1.2rem; }
-            
-            .timeline::before {
-                left: 20px;
-            }
-            
+            .container { padding: 12px; }
+
+            .hero { padding: 30px 12px; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; margin-bottom: 20px; }
+            .hero-hint { font-size: 0.95rem !important; padding: 12px 14px !important; }
+
+            .countdown-box { padding: 15px; margin: 20px auto; }
+            .countdown { gap: 8px; }
+            .countdown-number { font-size: 1.8rem; }
+
+            .timeline::before { left: 16px; }
+
+            .challenge-card { margin: 20px 0; }
+
             .card-content {
-                width: 90%;
+                width: calc(100% - 40px);
                 margin-left: 40px !important;
+                padding: 20px 16px;
+                min-width: unset;
             }
-            
-            .countdown {
-                gap: 10px;
+
+            .card-content::before { display: none; }
+
+            .day-number { font-size: 1.5rem; }
+            .challenge-title { font-size: 1.2rem; }
+            .challenge-description { font-size: 1rem; }
+
+            .envelope { font-size: 3.5rem; }
+            .unlock-countdown-number { font-size: 1.4rem; }
+
+            .final-section {
+                padding: 30px 20px;
+                margin: 30px auto;
             }
-            
-            .countdown-number {
-                font-size: 2rem;
+            .final-section h2 { font-size: 2rem; }
+            .final-section p { font-size: 1rem; }
+
+            .unlock-animation {
+                padding: 30px 20px;
+                width: 90%;
+                left: 50%;
+            }
+            .unlock-animation h2 { font-size: 1.8rem; }
+        }
+
+        @media (hover: none) {
+            .card-content:hover {
+                transform: none;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             }
         }
     </style>
@@ -400,6 +445,7 @@
         <div class="hero">
             <h1>El viaje de cumpleaños de Irene 🎂</h1>
             <p>9 días, 9 recuerdos</p>
+            <p class="hero-hint">Queda poco para el viaje... Prepárate para los retos más inesperados que van a necesitar de toda tu astucia. 🌟</p>
         </div>
 
         <div class="timeline" id="timeline"></div>
@@ -624,6 +670,7 @@
         }
 
         document.addEventListener('mousemove', (e) => {
+            if ('ontouchstart' in window) return;
             if (Math.random() < 0.001) {
                 const message = hiddenMessages[Math.floor(Math.random() * hiddenMessages.length)];
                 const hiddenMsg = document.getElementById('hiddenMessage');
