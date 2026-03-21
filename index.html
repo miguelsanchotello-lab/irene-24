@@ -661,6 +661,7 @@
 
         let lastUnlockedCount = 0;
         let lastRenderTime = 0;
+        let photosData = {};
 
         function renderChallenges() {
             const timeline = document.getElementById('timeline');
@@ -819,12 +820,6 @@
             }
         });
 
-        renderChallenges();
-
-        setInterval(() => {
-            renderChallenges();
-        }, 1000);
-
         // Sistema de fotos polaroid
         const PASSWORD = 'Irene365$';
         const IMGBB_KEY = 'b4c1c534533c30a1c23cddb4d39c69d9';
@@ -833,7 +828,6 @@
         const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${JSONBIN_BIN}`;
 
         let pendingPhotoDay = null;
-        let photosData = {};
 
         async function loadPhotos() {
             try {
@@ -842,9 +836,12 @@
                 });
                 const data = await res.json();
                 photosData = data.record.photos || {};
-                lastRenderTime = 0;
-                renderChallenges();
-            } catch(e) { console.error('Error cargando fotos', e); }
+            } catch(e) {
+                console.error('Error cargando fotos', e);
+            }
+            lastRenderTime = 0;
+            renderChallenges();
+            setInterval(() => renderChallenges(), 1000);
         }
 
         async function savePhoto(day, url) {
